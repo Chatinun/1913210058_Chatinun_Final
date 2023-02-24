@@ -119,6 +119,28 @@ exports.destroy = async (req, res, next) => {
   }
 };
 
+exports.destroyproduct = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const product = await Product.deleteOne({
+      _id: id,
+    });
+
+    if (product.deletedCount === 0) {
+      const error = new Error("ไม่สามารถลบข้อมูลได้ / ไม่พบข้อมูลผู้ใช้งาน");
+      error.statusCode = 400;
+      throw error;
+    } else {
+      res.status(200).json({
+        message: "ลบข้อมูลเรียบร้อยแล้ว",
+      });
+    }
+  } catch (error) {
+    next(error)
+  }
+};
+
 exports.update = async (req, res, next) => {
   try {
 		const { id } = req.params;
@@ -143,5 +165,34 @@ exports.update = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.updateproduct = async (req, res, next) => {
+  try {
+		const { id } = req.params;
+    const { name, price, brand, family, movement  } = req.body;
+
+		const product = await Product.findOneAndUpdate({_id: id}, {
+			name: name,
+      price: price,
+      brand: brand,
+      family: family,
+      movement: movement
+		})
+
+    if(!product){
+      const error = new Error("ไม่พบข้อมูลสินค้า");
+      error.statusCode = 400;
+      throw error;
+    }
+
+    res.status(200).json({
+      message: "แก้ไขข้อมูลเรียบร้อยแล้ว",
+    });
+    
+  } catch (error) {
+    next(error);
+  }
+};
+
 
 

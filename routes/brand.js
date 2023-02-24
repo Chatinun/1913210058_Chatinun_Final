@@ -31,6 +31,10 @@ router.delete('/:id', [passportJWT.isLogin], [checkAdmin.isAdmin], brandControll
 
 router.put('/:id', [passportJWT.isLogin], [checkAdmin.isAdmin], brandController.update);
 
+router.delete('/product/:id', [passportJWT.isLogin], [checkAdmin.isAdmin], brandController.destroyproduct);
+
+router.put('/product/:id', [passportJWT.isLogin], [checkAdmin.isAdmin], brandController.updateproduct);
+
 module.exports = router;
 
 
