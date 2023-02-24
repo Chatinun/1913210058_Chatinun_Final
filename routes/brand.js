@@ -13,15 +13,23 @@ router.get('/product', brandController.product);
 
 router.get('/:id', brandController.brandproduct);
 
-router.post('/',
+router.post('/', [passportJWT.isLogin], [checkAdmin.isAdmin],
 [
     body("name").not().isEmpty().withMessage("กรุณาป้อนชื่อแบรนด์ด้วย")
 ]
 , brandController.insert);
 
-router.delete('/:id', brandController.destroy);
+router.post('/product', [passportJWT.isLogin], [checkAdmin.isAdmin],
+[
+    body("name").not().isEmpty().withMessage("กรุณาป้อนชื่อนาฬิกาด้วย"),
+    body("price").not().isEmpty().withMessage("กรุณาป้อนราคาด้วย"),
+    body("brand").not().isEmpty().withMessage("กรุณาป้อนแบรนด์ของนาฬิกาด้วย")
+]
+, brandController.insertproduct);
 
-router.put('/:id', brandController.update);
+router.delete('/:id', [passportJWT.isLogin], [checkAdmin.isAdmin], brandController.destroy);
+
+router.put('/:id', [passportJWT.isLogin], [checkAdmin.isAdmin], brandController.update);
 
 module.exports = router;
 

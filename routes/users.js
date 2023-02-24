@@ -6,9 +6,7 @@ const passportJWT = require('../middleware/passportJWT');
 const checkAdmin = require('../middleware/checkAdmin');
 
 /* GET users listing. */
-router.get("/", userController.index);
-
-router.get("/bio", userController.bio);
+router.get("/", [passportJWT.isLogin], userController.index);
 
 router.post("/",
   [
@@ -25,7 +23,5 @@ router.post("/login",
 		body("password").not().isEmpty().withMessage("กรุณากรอกรหัสผ่านด้วย").isLength({min: 5}).withMessage("รหัสผ่านต้อง 5 ตัวอักษรขึ้นไป")
 	], 
 	userController.login);
-
-router.get('/me', [passportJWT.isLogin], userController.profile)
-
+	
 module.exports = router;

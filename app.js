@@ -8,7 +8,8 @@ const passport = require('passport');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var brandRouter = require('./routes/brand');
+const brandRouter = require('./routes/brand');
+const staffRouter = require('./routes/staff');
 
 const errorHandler = require('./middleware/errorHandler');
 
@@ -30,6 +31,7 @@ app.use(passport.initialize())
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
 app.use('/brand', brandRouter);
+app.use('/staff', staffRouter);
 
 app.use(errorHandler);
 

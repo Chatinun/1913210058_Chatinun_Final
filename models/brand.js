@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const brandSchema = new Schema({
-    name:  String, // String is shorthand for {type: String}
+    name: { type: String, required: true, trim: true }, // String is shorthand for {type: String}
+    established: { type: String }
   },
   { 
     collection: "brands", 
-    timestamps: true,
     toJSON: {virtuals: true},
   });
 

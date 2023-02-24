@@ -4,18 +4,11 @@ const jwt = require("jsonwebtoken");
 const config = require('../config/index');
 
 exports.index = (req, res, next) => {
-  //res.send('Hello');
+  const{role, name, email} = req.user
   res.status(200).json({
-    fullname: "Chatinun Nuntapasuk",
-  });
-};
-
-exports.bio = (req, res, next) => {
-  res.status(200).json({
-    fullname: "Chatinun Nuntapasuk",
-    nickname: "Max",
-    hobby: "Sleep",
-    gitusername: "Chatinun",
+    name: name,
+    email: email,
+    role: role,
   });
 };
 
@@ -104,13 +97,4 @@ exports.login = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-};
-
-exports.profile = (req, res, next) => {
-  const{role, name, email} = req.user
-  res.status(200).json({
-    name: name,
-    email: email,
-    role: role,
-  });
 };
